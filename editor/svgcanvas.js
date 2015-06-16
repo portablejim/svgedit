@@ -7097,6 +7097,10 @@ this.groupSelectedElements = function(type, urlArg) {
 		batchCmd.addSubCommand(new svgedit.history.MoveElementCommand(elem, oldNextSibling, oldParent));			
 	}
 	if (!batchCmd.isEmpty()) {addCommandToHistory(batchCmd);}
+
+	var changedElements = selectedElements.slice();
+	changedElements.unshift(g);
+	call('changed', changedElements);
 	
 	// update selection
 	selectOnly([g], true);
@@ -7353,6 +7357,10 @@ this.ungroupSelectedElement = function() {
 		batchCmd.addSubCommand(new svgedit.history.RemoveElementCommand(g, gNextSibling, parent));
 
 		if (!batchCmd.isEmpty()) {addCommandToHistory(batchCmd);}
+
+		var changedElements = selectedElements.slice();
+		changedElements.unshift(g);
+		call('changed', changedElements);
 		
 		// update selection
 		addToSelection(children);
